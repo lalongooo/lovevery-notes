@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragment_splash_screen">
+
+    <fragment
+        android:id="@+id/fragment_splash_screen"
+        android:name="com.lovevery.notes.android.ui.SplashScreenFragment"
+        tools:layout="@layout/fragment_splash_screen">
+
+        <action
+            android:id="@+id/action_splashScreen_to_usersList"
+            app:destination="@+id/fragment_users_list" />
+
+        <action
+            android:id="@+id/action_splashScreen_to_enterUsername"
+            app:destination="@+id/fragment_enter_username" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_users_list"
+        android:name="com.lovevery.notes.android.ui.users.UsersListFragment"
+        tools:layout="@layout/fragment_users_list">
+
+        <action
+            android:id="@+id/action_usersList_to_subjectsList"
+            app:destination="@+id/fragment_subjects_list" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_subjects_list"
+        android:name="com.lovevery.notes.android.ui.subject.SubjectsListFragment"
+        tools:layout="@layout/fragment_subjects_list">
+
+        <action
+            android:id="@+id/action_subjectsList_to_notes"
+            app:destination="@+id/fragment_notes" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_notes"
+        android:name="com.lovevery.notes.android.ui.notes.NotesFragment"
+        tools:layout="@layout/fragment_notes">
+
+        <action
+            android:id="@+id/action_Notes_to_usersList"
+            app:destination="@+id/fragment_users_list" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/fragment_enter_username"
+        android:name="com.lovevery.notes.android.ui.users.UsernameFragment"
+        tools:layout="@layout/fragment_enter_username">
+
+        <action
+            android:id="@+id/action_enterUsername_to_enterSubject"
+            app:destination="@+id/fragment_enter_subject" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_enter_subject"
+        android:name="com.lovevery.notes.android.ui.subject.SubjectFragment"
+        tools:layout="@layout/fragment_enter_subject">
+
+        <action
+            android:id="@+id/action_enterSubject_to_notes"
+            app:destination="@+id/fragment_notes" />
+
+    </fragment>
+
+</navigation>
