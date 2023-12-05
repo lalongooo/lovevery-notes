@@ -1,0 +1,27 @@
+name: "Build & Test"
+on: push
+jobs:
+  build_app:
+    name: "Build app"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - uses: gradle/gradle-build-action@v2.1.0
+        with:
+          arguments: assembleDebug --stacktrace
+  unit_tests:
+    name: "Run tests"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - uses: gradle/gradle-build-action@v2.1.0
+        with:
+          arguments: test --stacktrace
