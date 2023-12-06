@@ -1,10 +1,11 @@
 package com.lovevery.notes.android.data.repository.model
 
-data class UserNotesModel(
-    val notes: Map<String, List<NoteModel>>
+data class UserNoteModel(
+    val subject: String,
+    val message: String
 )
 
-data class NoteModel(
-    val subject: String,
-    val content: String
+data class UserNotesModel(
+    val user: String,
+    val notes: List<UserNoteModel>
 )

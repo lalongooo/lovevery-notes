@@ -3,6 +3,7 @@ package com.lovevery.notes.android.data.di.module
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.lovevery.notes.android.data.api.ApiService
+import com.lovevery.notes.android.data.api.converter.LoveveryBodyConverterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
