@@ -1,6 +1,7 @@
 package com.lovevery.notes.android.data.api.converter
 
 import com.google.gson.Gson
+import com.lovevery.notes.android.data.api.model.NoteResponse
 import com.lovevery.notes.android.data.api.model.NotesResponse
 import com.lovevery.notes.android.data.api.model.UserNotesResponse
 import okhttp3.ResponseBody
@@ -24,6 +25,7 @@ class LoveveryBodyConverterFactory private constructor(
         return when (type) {
             NotesResponse::class.java -> LoveveryNotesConverter(this.gson)
             UserNotesResponse::class.java -> LoveveryUserNotesConverter(this.gson)
+            NoteResponse::class.java -> LoveveryPostNoteConverter(this.gson)
             else -> null
         }
     }
