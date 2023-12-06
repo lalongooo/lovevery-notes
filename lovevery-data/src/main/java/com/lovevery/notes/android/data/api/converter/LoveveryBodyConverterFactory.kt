@@ -1,7 +1,8 @@
-package com.lovevery.notes.android.data.di.module
+package com.lovevery.notes.android.data.api.converter
 
 import com.google.gson.Gson
 import com.lovevery.notes.android.data.api.model.NotesResponse
+import com.lovevery.notes.android.data.api.model.UserNotesResponse
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -20,10 +21,11 @@ class LoveveryBodyConverterFactory private constructor(
         annotations: Array<Annotation>,
         retrofit: Retrofit
     ): Converter<ResponseBody, *>? {
-        if (type == NotesResponse::class.java) {
-            return LoveveryBodyConverter(this.gson)
+        return when (type) {
+            NotesResponse::class.java -> LoveveryNotesConverter(this.gson)
+            UserNotesResponse::class.java -> LoveveryUserNotesConverter(this.gson)
+            else -> null
         }
-        return null
     }
 
     override fun requestBodyConverter(

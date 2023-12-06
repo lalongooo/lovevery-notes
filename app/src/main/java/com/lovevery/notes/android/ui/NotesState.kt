@@ -7,3 +7,9 @@ sealed class NotesState {
     object Empty : NotesState()
     data class NotEmpty(val notes: Notes) : NotesState()
 }
+
+sealed class UserNotesState {
+    data class Error(val throwable: Throwable) : UserNotesState()
+    object Empty : UserNotesState()
+    data class NotEmpty(val notes: Notes) : UserNotesState()
+}

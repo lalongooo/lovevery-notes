@@ -1,10 +1,11 @@
 package com.lovevery.notes.android.model
 
-data class Notes(
-    val notes: Map<String, List<Note>>
+data class UserNote(
+    val subject: String,
+    val message: String
 )
 
-data class Note(
-    val subject: String,
-    val content: String
+data class UserNotes(
+    val user: String,
+    val notes: List<UserNote>
 )

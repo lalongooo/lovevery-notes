@@ -1,15 +1,14 @@
-package com.lovevery.notes.android.data.di.module
+package com.lovevery.notes.android.data.api.converter
 
 import com.google.gson.Gson
 import com.google.gson.JsonElement
-import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
 import com.lovevery.notes.android.data.api.model.NoteModelResponse
 import com.lovevery.notes.android.data.api.model.NotesResponse
 import okhttp3.ResponseBody
 import retrofit2.Converter
 
-class LoveveryBodyConverter(
+class LoveveryNotesConverter(
     private val gson: Gson
 ) : Converter<ResponseBody, NotesResponse> {
 
@@ -31,14 +30,5 @@ class LoveveryBodyConverter(
                 notes = notes
             )
         }
-    }
-
-    private fun isEmptyJson(jsonString: String): Boolean {
-        val jsonElement = JsonParser().parse(jsonString)
-        if (jsonElement.isJsonObject) {
-            val jsonObject = jsonElement.asJsonObject
-            return jsonObject.entrySet().isEmpty()
-        }
-        return false
     }
 }

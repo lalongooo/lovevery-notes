@@ -48,6 +48,9 @@ class SplashScreenFragment : Fragment() {
     private fun setupObserver() {
         splashViewModel.notesState
             .observe(viewLifecycleOwner, Observer(this::handleNotesState))
+
+        splashViewModel.userNotesState
+            .observe(viewLifecycleOwner, Observer(this::handleNotesState))
     }
 
     private fun handleNotesState(notesState: NotesState) {
@@ -59,6 +62,20 @@ class SplashScreenFragment : Fragment() {
                 // TODO
             }
             is NotesState.NotEmpty -> {
+                // TODO
+            }
+        }
+    }
+
+    private fun handleUserNotesState(notesState: UserNotesState) {
+        when (notesState) {
+            UserNotesState.Empty -> {
+                // TODO
+            }
+            is UserNotesState.Error -> {
+                // TODO
+            }
+            is UserNotesState.NotEmpty -> {
                 // TODO
             }
         }
