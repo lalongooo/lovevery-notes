@@ -5,7 +5,7 @@ import com.lovevery.notes.android.utility.SingleLiveEvent
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseViewModel : ViewModel() {
-    private val disposable = CompositeDisposable()
+    val disposable = CompositeDisposable()
 
     val progress = SingleLiveEvent<Boolean>()
 

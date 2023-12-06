@@ -5,14 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.lovevery.notes.android.R
 import com.lovevery.notes.android.databinding.FragmentSplashScreenBinding
+import com.lovevery.notes.android.extensions.getAppComponent
 
 class SplashScreenFragment : Fragment() {
 
     private var _binding: FragmentSplashScreenBinding? = null
     private val binding get() = _binding!!
+
+    private val splashViewModel: SplashViewModel by viewModels {
+        getAppComponent().viewModelsFactory()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +32,8 @@ class SplashScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
+        setupObserver()
+        splashViewModel.getNotes()
     }
 
     private fun setupClickListeners() {
@@ -33,6 +42,25 @@ class SplashScreenFragment : Fragment() {
         }
         binding.buttonEmptyNotes.setOnClickListener {
             findNavController().navigate(R.id.action_splashScreen_to_enterUsername)
+        }
+    }
+
+    private fun setupObserver() {
+        splashViewModel.notesState
+            .observe(viewLifecycleOwner, Observer(this::handleNotesState))
+    }
+
+    private fun handleNotesState(notesState: NotesState) {
+        when (notesState) {
+            NotesState.Empty -> {
+                // TODO
+            }
+            is NotesState.Error -> {
+                // TODO
+            }
+            is NotesState.NotEmpty -> {
+                // TODO
+            }
         }
     }
 
