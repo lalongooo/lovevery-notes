@@ -11,5 +11,6 @@ data class NotesResponse(
 
 data class NoteModelResponse(
     val subject: String,
-    val message: String
+    @SerializedName("message")
+    val content: String,
 )

@@ -4,6 +4,8 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.lovevery.notes.android.data.api.ApiService
 import com.lovevery.notes.android.data.api.converter.LoveveryBodyConverterFactory
+import com.lovevery.notes.android.data.api.model.OperationType
+import com.lovevery.notes.android.data.api.serializer.OperationTypeSerializer
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
@@ -47,6 +49,7 @@ class NetworkModule(private val baseUrl: String) {
     @Singleton
     fun provideGson(): Gson = GsonBuilder()
         .excludeFieldsWithModifiers(Modifier.TRANSIENT)
+        .registerTypeAdapter(OperationType::class.java, OperationTypeSerializer())
         .disableHtmlEscaping().create()
 
     @Provides
