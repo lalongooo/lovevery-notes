@@ -31,21 +31,14 @@ class SplashScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupClickListeners()
         setupObserver()
         splashViewModel.getNotes()
     }
 
-    private fun setupClickListeners() {
-        binding.buttonNotes.setOnClickListener {
-            findNavController().navigate(R.id.action_splashScreen_to_usersList)
-        }
-        binding.buttonEmptyNotes.setOnClickListener {
-            findNavController().navigate(R.id.action_splashScreen_to_enterUsername)
-        }
-    }
-
     private fun setupObserver() {
+        splashViewModel.progress
+            .observe(viewLifecycleOwner, Observer(this::showLoading))
+
         splashViewModel.notesState
             .observe(viewLifecycleOwner, Observer(this::handleNotesState))
 
@@ -53,17 +46,23 @@ class SplashScreenFragment : Fragment() {
             .observe(viewLifecycleOwner, Observer(this::handleNotesState))
     }
 
+    private fun showLoading(showProgress: Boolean) {
+        if (showProgress) {
+            binding.progressBarIndicator.visibility = View.VISIBLE
+        } else {
+            binding.progressBarIndicator.visibility = View.GONE
+        }
+    }
+
     private fun handleNotesState(notesState: NotesState) {
         when (notesState) {
-            NotesState.Empty -> {
-                // TODO
-            }
+            NotesState.Empty ->
+                findNavController().navigate(R.id.action_splashScreen_to_enterUsername)
             is NotesState.Error -> {
                 // TODO
             }
-            is NotesState.NotEmpty -> {
-                // TODO
-            }
+            is NotesState.NotEmpty ->
+                findNavController().navigate(R.id.action_splashScreen_to_usersList)
         }
     }
 

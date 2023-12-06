@@ -12,11 +12,15 @@
 
         <action
             android:id="@+id/action_splashScreen_to_usersList"
-            app:destination="@+id/fragment_users_list" />
+            app:destination="@+id/fragment_users_list"
+            app:popUpTo="@+id/fragment_splash_screen"
+            app:popUpToInclusive="true" />
 
         <action
             android:id="@+id/action_splashScreen_to_enterUsername"
-            app:destination="@+id/fragment_enter_username" />
+            app:destination="@+id/fragment_enter_username"
+            app:popUpTo="@+id/fragment_splash_screen"
+            app:popUpToInclusive="true" />
 
     </fragment>
 
