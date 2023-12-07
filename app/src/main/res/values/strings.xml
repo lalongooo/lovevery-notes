@@ -2,6 +2,8 @@
     <string name="app_name">lovevery-notes</string>
     <string name="enter_your_username">Enter your username</string>
     <string name="username_hint">username</string>
+    <string name="enter_note">Enter the content of your note</string>
     <string name="enter_subject">Enter subject</string>
     <string name="subject_hint">subject</string>
+    <string name="send">Send</string>
 </resources>
