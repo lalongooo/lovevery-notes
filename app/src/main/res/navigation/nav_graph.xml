@@ -8,6 +8,7 @@
     <fragment
         android:id="@+id/fragment_splash_screen"
         android:name="com.lovevery.notes.android.ui.SplashScreenFragment"
+        android:label="@string/screen_title_splash"
         tools:layout="@layout/fragment_splash_screen">
 
         <action
@@ -27,6 +28,7 @@
     <fragment
         android:id="@+id/fragment_users_list"
         android:name="com.lovevery.notes.android.ui.users.UsersListFragment"
+        android:label="@string/screen_title_users"
         tools:layout="@layout/fragment_users_list">
 
         <action
@@ -38,6 +40,7 @@
     <fragment
         android:id="@+id/fragment_subjects_list"
         android:name="com.lovevery.notes.android.ui.subject.SubjectsListFragment"
+        android:label="@string/screen_title_subject"
         tools:layout="@layout/fragment_subjects_list">
 
         <action
@@ -49,6 +52,7 @@
     <fragment
         android:id="@+id/fragment_notes"
         android:name="com.lovevery.notes.android.ui.notes.NotesFragment"
+        android:label="@string/screen_title_notes"
         tools:layout="@layout/fragment_notes">
 
         <action
@@ -61,6 +65,7 @@
     <fragment
         android:id="@+id/fragment_enter_username"
         android:name="com.lovevery.notes.android.ui.users.UsernameFragment"
+        android:label="@string/screen_title_enter_username"
         tools:layout="@layout/fragment_enter_username">
 
         <action
@@ -72,6 +77,7 @@
     <fragment
         android:id="@+id/fragment_enter_subject"
         android:name="com.lovevery.notes.android.ui.subject.SubjectFragment"
+        android:label="@string/screen_title_enter_subject"
         tools:layout="@layout/fragment_enter_subject">
 
         <action

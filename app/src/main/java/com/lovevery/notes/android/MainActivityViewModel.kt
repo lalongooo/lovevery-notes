@@ -12,6 +12,7 @@ class MainActivityViewModel @Inject constructor() : BaseViewModel() {
     val userNotes: LiveData<Notes> get() = _userNotes
 
     private lateinit var userId: String
+    private lateinit var selectedSubject: String
 
     fun setUserNotes(notes: Notes) {
         _userNotes.value = notes
@@ -19,6 +20,10 @@ class MainActivityViewModel @Inject constructor() : BaseViewModel() {
 
     fun setUsername(userId: String) {
         this.userId = userId
+    }
+
+    fun setSubject(selectedSubject: String) {
+        this.selectedSubject = selectedSubject
     }
 
     fun getUsers(): List<String> {
