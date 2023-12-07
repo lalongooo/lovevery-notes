@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.lovevery.notes.android.MainActivityViewModel
+import com.lovevery.notes.android.R
 import com.lovevery.notes.android.databinding.FragmentSubjectsListBinding
 import com.lovevery.notes.android.ui.users.NotesAdapter
 
@@ -34,7 +36,9 @@ class SubjectsListFragment : Fragment() {
     private fun retrieveSubjects() {
         val subjects = mainViewModel.getSubjects()
         val adapter = NotesAdapter(subjects) { selectedSubject ->
-            Log.d(TAG, "Selected subject: $selectedSubject") // TODO: Navigate to the 'enter subject' screen
+            Log.d(TAG, "Selected subject: $selectedSubject")
+            mainViewModel.setSubject(selectedSubject)
+            findNavController().navigate(R.id.action_subjectsList_to_notes)
         }
         binding.recyclerViewSubjects.adapter = adapter
 
