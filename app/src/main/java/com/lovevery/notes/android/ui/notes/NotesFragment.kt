@@ -15,7 +15,7 @@ class NotesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val notesViewModel: NotesViewModel by viewModels {
-        getAppComponent().viewModelsFactory()
+        requireContext().getAppComponent().viewModelsFactory()
     }
 
     override fun onCreateView(

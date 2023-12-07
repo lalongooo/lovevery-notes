@@ -2,6 +2,7 @@ package com.lovevery.notes.android.di.module
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.lovevery.notes.android.MainActivityViewModel
 import com.lovevery.notes.android.di.ViewModelProviderFactory
 import com.lovevery.notes.android.di.key.ViewModelKey
 import com.lovevery.notes.android.ui.SplashViewModel
@@ -38,5 +39,12 @@ abstract class ViewModelModule {
     @ViewModelKey(NotesViewModel::class)
     abstract fun bindNotesViewModel(
         loginViewModel: NotesViewModel
+    ): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainActivityViewModel::class)
+    abstract fun bindMainActivityViewModel(
+        mainActivityViewModel: MainActivityViewModel
     ): ViewModel
 }

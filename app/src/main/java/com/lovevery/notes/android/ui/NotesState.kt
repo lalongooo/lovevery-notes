@@ -5,8 +5,8 @@ import com.lovevery.notes.android.model.Notes
 
 sealed class NotesState {
     data class Error(val throwable: Throwable) : NotesState()
-    object Empty : NotesState()
-    data class NotEmpty(val notes: Notes) : NotesState()
+    data object Empty : NotesState()
+    data class Success(val notes: Notes) : NotesState()
 }
 
 sealed class UserNotesState {
