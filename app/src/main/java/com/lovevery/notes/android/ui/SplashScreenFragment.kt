@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.lovevery.notes.android.MainActivityViewModel
 import com.lovevery.notes.android.R
 import com.lovevery.notes.android.databinding.FragmentSplashScreenBinding
 import com.lovevery.notes.android.extensions.getAppComponent
@@ -18,8 +20,10 @@ class SplashScreenFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val splashViewModel: SplashViewModel by viewModels {
-        getAppComponent().viewModelsFactory()
+        requireContext().getAppComponent().viewModelsFactory()
     }
+
+    private val mainViewModel: MainActivityViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,8 +65,10 @@ class SplashScreenFragment : Fragment() {
             is NotesState.Error -> {
                 // TODO
             }
-            is NotesState.NotEmpty ->
+            is NotesState.Success -> {
+                mainViewModel.setUserNotes(notesState.notes)
                 findNavController().navigate(R.id.action_splashScreen_to_usersList)
+            }
         }
     }
 

@@ -29,7 +29,7 @@ class SplashViewModel @Inject constructor(
                         if (notes.notes.isEmpty()) {
                             _notesState.value = NotesState.Empty
                         } else {
-                            _notesState.value = NotesState.NotEmpty(notes)
+                            _notesState.value = NotesState.Success(notes)
                         }
                     },
                     {
