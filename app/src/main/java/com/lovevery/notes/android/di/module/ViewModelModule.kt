@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.lovevery.notes.android.di.ViewModelProviderFactory
 import com.lovevery.notes.android.di.key.ViewModelKey
 import com.lovevery.notes.android.ui.SplashViewModel
+import com.lovevery.notes.android.ui.notes.NotesViewModel
 import com.lovevery.notes.android.ui.users.UsersViewModel
 import dagger.Binds
 import dagger.Module
@@ -30,5 +31,12 @@ abstract class ViewModelModule {
     @ViewModelKey(SplashViewModel::class)
     abstract fun bindSplashViewModel(
         loginViewModel: SplashViewModel
+    ): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(NotesViewModel::class)
+    abstract fun bindNotesViewModel(
+        loginViewModel: NotesViewModel
     ): ViewModel
 }
