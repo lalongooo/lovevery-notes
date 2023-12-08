@@ -35,6 +35,10 @@
             android:id="@+id/action_usersList_to_subjectsList"
             app:destination="@+id/fragment_subjects_list" />
 
+        <action
+            android:id="@+id/action_usersList_to_enterUsername"
+            app:destination="@+id/fragment_enter_username" />
+
     </fragment>
 
     <fragment

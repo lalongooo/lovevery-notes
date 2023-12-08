@@ -1,11 +1,11 @@
 package com.lovevery.notes.android.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -13,6 +13,7 @@ import com.lovevery.notes.android.MainActivityViewModel
 import com.lovevery.notes.android.R
 import com.lovevery.notes.android.databinding.FragmentSplashScreenBinding
 import com.lovevery.notes.android.extensions.getAppComponent
+import com.lovevery.notes.android.ui.users.UsersListFragment
 
 class SplashScreenFragment : Fragment() {
 
@@ -23,7 +24,9 @@ class SplashScreenFragment : Fragment() {
         requireContext().getAppComponent().viewModelsFactory()
     }
 
-    private val mainViewModel: MainActivityViewModel by activityViewModels()
+    private val mainViewModel: MainActivityViewModel by viewModels {
+        requireContext().getAppComponent().viewModelsFactory()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,9 +48,6 @@ class SplashScreenFragment : Fragment() {
 
         splashViewModel.notesState
             .observe(viewLifecycleOwner, Observer(this::handleNotesState))
-
-        splashViewModel.userNotesState
-            .observe(viewLifecycleOwner, Observer(this::handleNotesState))
     }
 
     private fun showLoading(showProgress: Boolean) {
@@ -68,20 +68,6 @@ class SplashScreenFragment : Fragment() {
             is NotesState.Success -> {
                 mainViewModel.setUserNotes(notesState.notes)
                 findNavController().navigate(R.id.action_splashScreen_to_usersList)
-            }
-        }
-    }
-
-    private fun handleUserNotesState(notesState: UserNotesState) {
-        when (notesState) {
-            UserNotesState.Empty -> {
-                // TODO
-            }
-            is UserNotesState.Error -> {
-                // TODO
-            }
-            is UserNotesState.NotEmpty -> {
-                // TODO
             }
         }
     }

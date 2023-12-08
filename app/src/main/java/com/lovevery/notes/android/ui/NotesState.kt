@@ -2,6 +2,7 @@ package com.lovevery.notes.android.ui
 
 import com.lovevery.notes.android.model.Note
 import com.lovevery.notes.android.model.Notes
+import com.lovevery.notes.android.model.UserNotes
 
 sealed class NotesState {
     data class Error(val throwable: Throwable) : NotesState()
@@ -12,7 +13,7 @@ sealed class NotesState {
 sealed class UserNotesState {
     data class Error(val throwable: Throwable) : UserNotesState()
     object Empty : UserNotesState()
-    data class NotEmpty(val notes: Notes) : UserNotesState()
+    data class Success(val notes: UserNotes) : UserNotesState()
 }
 
 sealed class PostNoteState {
