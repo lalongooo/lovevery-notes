@@ -7,7 +7,6 @@ import com.lovevery.notes.android.di.ViewModelProviderFactory
 import com.lovevery.notes.android.di.key.ViewModelKey
 import com.lovevery.notes.android.ui.SplashViewModel
 import com.lovevery.notes.android.ui.notes.NotesViewModel
-import com.lovevery.notes.android.ui.users.UsersViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -20,13 +19,6 @@ abstract class ViewModelModule {
     abstract fun bindViewModelFactory(
         viewModelProviderFactory: ViewModelProviderFactory
     ): ViewModelProvider.Factory
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(UsersViewModel::class)
-    abstract fun bindUsersViewModel(
-        loginViewModel: UsersViewModel
-    ): ViewModel
 
     @Binds
     @IntoMap

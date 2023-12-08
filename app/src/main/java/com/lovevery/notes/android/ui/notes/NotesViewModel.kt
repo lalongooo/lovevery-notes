@@ -2,6 +2,7 @@ package com.lovevery.notes.android.ui.notes
 
 import com.lovevery.notes.android.base.BaseViewModel
 import com.lovevery.notes.android.data.repository.NotesRepository
+import com.lovevery.notes.android.data.repository.SessionRepository
 import com.lovevery.notes.android.extensions.asLiveData
 import com.lovevery.notes.android.mapper.toNote
 import com.lovevery.notes.android.ui.PostNoteState
@@ -9,7 +10,8 @@ import com.lovevery.notes.android.utility.SingleLiveEvent
 import javax.inject.Inject
 
 class NotesViewModel @Inject constructor(
-    private val notesRepository: NotesRepository
+    private val notesRepository: NotesRepository,
+    private val sessionRepository: SessionRepository
 ) : BaseViewModel() {
 
 
@@ -19,7 +21,7 @@ class NotesViewModel @Inject constructor(
     fun postNote(content: String) {
         disposable.add(
             notesRepository.addNote(
-                subject = "cars", // TODO: Get this from a SubjectManager or a session storage
+                subject = sessionRepository.getSubject(),
                 content = content,
             )
                 .map { it.toNote() }
