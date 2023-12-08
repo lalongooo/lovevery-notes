@@ -11,6 +11,7 @@ import com.lovevery.notes.android.ui.users.UsersViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
+import javax.inject.Singleton
 
 @Module
 abstract class ViewModelModule {
@@ -41,6 +42,7 @@ abstract class ViewModelModule {
         loginViewModel: NotesViewModel
     ): ViewModel
 
+    @Singleton
     @Binds
     @IntoMap
     @ViewModelKey(MainActivityViewModel::class)

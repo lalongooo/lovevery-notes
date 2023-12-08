@@ -12,6 +12,7 @@ class NotesViewModel @Inject constructor(
     private val notesRepository: NotesRepository
 ) : BaseViewModel() {
 
+
     private val _postNoteState = SingleLiveEvent<PostNoteState>()
     val postNoteState = _postNoteState.asLiveData()
 
