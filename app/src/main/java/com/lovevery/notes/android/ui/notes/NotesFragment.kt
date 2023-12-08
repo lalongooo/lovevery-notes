@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.lovevery.notes.android.databinding.FragmentNotesBinding
@@ -30,7 +32,15 @@ class NotesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnSendNote.setOnClickListener {
+            binding.editTextNoteContent.editableText.clear()
             notesViewModel.postNote(binding.editTextNoteContent.text.toString())
+        }
+
+        if (binding.editTextNoteContent.requestFocus()) {
+            WindowCompat.getInsetsController(
+                requireActivity().window,
+                binding.editTextNoteContent
+            ).show(WindowInsetsCompat.Type.ime())
         }
     }
 
