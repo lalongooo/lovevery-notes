@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class UserNoteResponse(
     val subject: String,
-    val message: String
+    val message: String,
 )
 
 data class UserNotesResponse(
     val user: String,
     @SerializedName("message")
-    val notes: List<UserNoteResponse>
+    val notes: List<UserNoteResponse>,
 )

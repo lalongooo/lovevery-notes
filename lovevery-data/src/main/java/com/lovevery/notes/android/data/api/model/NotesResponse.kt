@@ -6,7 +6,7 @@ data class NotesResponse(
     @SerializedName("statusCode")
     val statusCode: Int,
     @SerializedName("body")
-    val notes: Map<String, List<NoteModelResponse>>
+    val notes: Map<String, List<NoteModelResponse>>,
 )
 
 data class NoteModelResponse(

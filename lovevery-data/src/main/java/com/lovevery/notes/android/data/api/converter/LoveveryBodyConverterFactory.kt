@@ -10,9 +10,8 @@ import retrofit2.Retrofit
 import java.lang.reflect.Type
 
 class LoveveryBodyConverterFactory private constructor(
-    private val gson: Gson
+    private val gson: Gson,
 ) : Converter.Factory() {
-
     fun create(gson: Gson): LoveveryBodyConverterFactory {
         return LoveveryBodyConverterFactory(gson)
     }
@@ -20,7 +19,7 @@ class LoveveryBodyConverterFactory private constructor(
     override fun responseBodyConverter(
         type: Type,
         annotations: Array<Annotation>,
-        retrofit: Retrofit
+        retrofit: Retrofit,
     ): Converter<ResponseBody, *>? {
         return when (type) {
             NotesResponse::class.java -> LoveveryNotesConverter(this.gson)
@@ -34,7 +33,7 @@ class LoveveryBodyConverterFactory private constructor(
         type: Type,
         parameterAnnotations: Array<Annotation>,
         methodAnnotations: Array<Annotation>,
-        retrofit: Retrofit
+        retrofit: Retrofit,
     ): Converter<*, okhttp3.RequestBody>? {
         return super.requestBodyConverter(type, parameterAnnotations, methodAnnotations, retrofit)
     }

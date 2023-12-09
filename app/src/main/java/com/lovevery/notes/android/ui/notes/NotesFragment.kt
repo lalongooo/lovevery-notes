@@ -20,7 +20,6 @@ import com.lovevery.notes.android.ui.UserNotesState
 import com.lovevery.notes.android.ui.users.NotesAdapter
 
 class NotesFragment : Fragment() {
-
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
 
@@ -33,14 +32,18 @@ class NotesFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentNotesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnSendNote.setOnClickListener {
             notesViewModel.postNote(binding.editTextNoteContent.text.toString())
@@ -50,7 +53,7 @@ class NotesFragment : Fragment() {
         if (binding.editTextNoteContent.requestFocus()) {
             WindowCompat.getInsetsController(
                 requireActivity().window,
-                binding.editTextNoteContent
+                binding.editTextNoteContent,
             ).show(ime())
         }
 
@@ -76,15 +79,16 @@ class NotesFragment : Fragment() {
                 Snackbar.make(
                     binding.rootCoordinatorLayout,
                     R.string.notes_empty_or_server_error,
-                    Snackbar.LENGTH_SHORT
+                    Snackbar.LENGTH_SHORT,
                 ).show()
             }
 
             is UserNotesState.Success -> {
                 val notes = userNotesState.notes.notes.map { it.message }
-                val adapter = NotesAdapter(notes.toMutableList()) { userSelected ->
-                    Log.d(TAG, "Selected Message: $userSelected")
-                }
+                val adapter =
+                    NotesAdapter(notes.toMutableList()) { userSelected ->
+                        Log.d(TAG, "Selected Message: $userSelected")
+                    }
                 binding.recyclerViewUserNotes.adapter = adapter
                 binding.recyclerViewUserNotes.scrollToPosition(adapter.itemCount - 1)
             }

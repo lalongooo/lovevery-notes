@@ -16,7 +16,6 @@ import com.lovevery.notes.android.extensions.getAppComponent
 import com.lovevery.notes.android.utility.isDoneButtonPressed
 
 class UsernameFragment : Fragment() {
-
     private var _binding: FragmentEnterUsernameBinding? = null
     private val binding get() = _binding!!
 
@@ -25,14 +24,18 @@ class UsernameFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentEnterUsernameBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         binding.editTextUsername.setOnEditorActionListener { _, actionId: Int, _ ->
             if (isDoneButtonPressed(actionId)) {
@@ -47,7 +50,7 @@ class UsernameFragment : Fragment() {
         if (binding.editTextUsername.requestFocus()) {
             WindowCompat.getInsetsController(
                 requireActivity().window,
-                binding.editTextUsername
+                binding.editTextUsername,
             ).show(ime())
         }
     }

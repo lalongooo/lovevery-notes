@@ -8,9 +8,8 @@ import okhttp3.ResponseBody
 import retrofit2.Converter
 
 class LoveveryPostNoteConverter(
-    private val gson: Gson
+    private val gson: Gson,
 ) : Converter<ResponseBody, NoteResponse> {
-
     override fun convert(value: ResponseBody): NoteResponse {
         val jsonString = value.string()
         val jsonElement: JsonElement = gson.fromJson(jsonString, JsonElement::class.java)

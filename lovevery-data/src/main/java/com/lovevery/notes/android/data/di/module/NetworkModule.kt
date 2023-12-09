@@ -20,12 +20,9 @@ import javax.inject.Singleton
 
 @Module
 class NetworkModule(private val baseUrl: String) {
-
     @Provides
     @Singleton
-    fun provideHttpClient(
-        httpLoggingInterceptor: Interceptor
-    ): OkHttpClient =
+    fun provideHttpClient(httpLoggingInterceptor: Interceptor): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
             .build()
@@ -35,7 +32,7 @@ class NetworkModule(private val baseUrl: String) {
     fun provideRetrofit(
         gson: Gson,
         httpClient: OkHttpClient,
-        rxJava2CallAdapterFactory: RxJava2CallAdapterFactory
+        rxJava2CallAdapterFactory: RxJava2CallAdapterFactory,
     ): Retrofit =
         Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -47,23 +44,22 @@ class NetworkModule(private val baseUrl: String) {
 
     @Provides
     @Singleton
-    fun provideGson(): Gson = GsonBuilder()
-        .excludeFieldsWithModifiers(Modifier.TRANSIENT)
-        .registerTypeAdapter(OperationType::class.java, OperationTypeSerializer())
-        .disableHtmlEscaping().create()
+    fun provideGson(): Gson =
+        GsonBuilder()
+            .excludeFieldsWithModifiers(Modifier.TRANSIENT)
+            .registerTypeAdapter(OperationType::class.java, OperationTypeSerializer())
+            .disableHtmlEscaping().create()
 
     @Provides
     @Singleton
-    fun provideApiService(
-        retrofit: Retrofit
-    ): ApiService = retrofit.create(
-        ApiService::class.java
-    )
+    fun provideApiService(retrofit: Retrofit): ApiService =
+        retrofit.create(
+            ApiService::class.java,
+        )
 
     @Provides
     @Singleton
-    fun provideRxJavaCallAdapterFactory(): RxJava2CallAdapterFactory =
-        RxJava2CallAdapterFactory.create();
+    fun provideRxJavaCallAdapterFactory(): RxJava2CallAdapterFactory = RxJava2CallAdapterFactory.create()
 
     @Provides
     @Singleton

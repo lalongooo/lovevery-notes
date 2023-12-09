@@ -16,7 +16,6 @@ import com.lovevery.notes.android.extensions.getAppComponent
 import com.lovevery.notes.android.ui.NotesState
 
 class UsersListFragment : Fragment() {
-
     private var _binding: FragmentUsersListBinding? = null
     private val binding get() = _binding!!
 
@@ -25,8 +24,9 @@ class UsersListFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         val isSavedInstanceStateNull = savedInstanceState == null
         Log.d(TAG, "isSavedInstanceStateNull: $isSavedInstanceStateNull")
@@ -34,7 +34,10 @@ class UsersListFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         setupObserver()
         setupClickListeners()
@@ -58,11 +61,12 @@ class UsersListFragment : Fragment() {
 
     private fun handleNotesState(notesState: NotesState) {
         val users = mainViewModel.getUsers()
-        val adapter = NotesAdapter(users.toMutableList()) { userSelected ->
-            Log.d(TAG, "userSelected: $userSelected")
-            mainViewModel.saveUserId(userSelected)
-            navigateToSubjectList()
-        }
+        val adapter =
+            NotesAdapter(users.toMutableList()) { userSelected ->
+                Log.d(TAG, "userSelected: $userSelected")
+                mainViewModel.saveUserId(userSelected)
+                navigateToSubjectList()
+            }
         binding.recyclerViewNotes.adapter = adapter
     }
 

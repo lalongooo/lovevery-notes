@@ -9,9 +9,8 @@ import okhttp3.ResponseBody
 import retrofit2.Converter
 
 class LoveveryNotesConverter(
-    private val gson: Gson
+    private val gson: Gson,
 ) : Converter<ResponseBody, NotesResponse> {
-
     override fun convert(value: ResponseBody): NotesResponse {
         val jsonString = value.string()
         val jsonElement: JsonElement = gson.fromJson(jsonString, JsonElement::class.java)
@@ -20,14 +19,14 @@ class LoveveryNotesConverter(
         return if (isEmptyJson(bodyString)) {
             NotesResponse(
                 statusCode = -1,
-                notes = emptyMap()
+                notes = emptyMap(),
             )
         } else {
             val typeToken = object : TypeToken<Map<String, List<NoteModelResponse>>>() {}.type
             val notes = gson.fromJson<Map<String, List<NoteModelResponse>>>(bodyString, typeToken)
             NotesResponse(
                 statusCode = statusCode,
-                notes = notes
+                notes = notes,
             )
         }
     }

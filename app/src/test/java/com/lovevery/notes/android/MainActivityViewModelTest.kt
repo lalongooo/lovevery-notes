@@ -25,7 +25,6 @@ import org.junit.Rule
 import org.junit.Test
 
 class MainActivityViewModelTest {
-
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
@@ -40,9 +39,10 @@ class MainActivityViewModelTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        systemUnderTest = spyk(
-            MainActivityViewModel(notesRepository = notesRepository, sessionRepository = sessionRepository)
-        )
+        systemUnderTest =
+            spyk(
+                MainActivityViewModel(notesRepository = notesRepository, sessionRepository = sessionRepository),
+            )
     }
 
     @Test
@@ -74,9 +74,10 @@ class MainActivityViewModelTest {
     @Test
     fun `test getUsers with non-empty results`() {
         // given
-        val testNotes = Notes(
-            mapOf("joe" to listOf(Note(subject = "cars", content = "Porsche 911")))
-        )
+        val testNotes =
+            Notes(
+                mapOf("joe" to listOf(Note(subject = "cars", content = "Porsche 911"))),
+            )
         val notesLiveData = MutableLiveData<NotesState>()
         notesLiveData.value = NotesState.Success(testNotes)
         every { systemUnderTest getProperty "notesState" } returns notesLiveData
@@ -105,9 +106,10 @@ class MainActivityViewModelTest {
     @Test
     fun `test getSubjects with non-empty results`() {
         // given
-        val testNotes = Notes(
-            mapOf("joe" to listOf(Note(subject = "cars", content = "Porsche 911")))
-        )
+        val testNotes =
+            Notes(
+                mapOf("joe" to listOf(Note(subject = "cars", content = "Porsche 911"))),
+            )
         val notesLiveData = MutableLiveData<NotesState>()
         notesLiveData.value = NotesState.Success(testNotes)
         every { sessionRepository.getUserId() } returns "joe"
@@ -155,15 +157,17 @@ class MainActivityViewModelTest {
     fun `test refreshUserNotes success`() {
         // given
         val userId = "user123"
-        val mockUserNotesModel = UserNotesModel(
-            user = userId,
-            notes = listOf(
-                UserNoteModel(
-                    subject = "testSubject111",
-                    message = "testMessage222"
-                )
+        val mockUserNotesModel =
+            UserNotesModel(
+                user = userId,
+                notes =
+                    listOf(
+                        UserNoteModel(
+                            subject = "testSubject111",
+                            message = "testMessage222",
+                        ),
+                    ),
             )
-        )
         every {
             notesRepository.getUserNotesBySubject()
         } returns Single.just(mockUserNotesModel)
@@ -197,19 +201,25 @@ class MainActivityViewModelTest {
         verify { userNotesStateObserver.onChanged(UserNotesState.Error(error)) }
     }
 
-
     @Test
     fun `test getNotes returns success`() {
         // given
         val testUser = "user123"
         val testSubject = "testSubject"
         val testContent = "testContent"
-        val mockNotes = NotesModel(
-            notes = mapOf(testUser to listOf(NoteModel(
-                subject = testSubject,
-                content = testContent,
-            )))
-        )
+        val mockNotes =
+            NotesModel(
+                notes =
+                    mapOf(
+                        testUser to
+                            listOf(
+                                NoteModel(
+                                    subject = testSubject,
+                                    content = testContent,
+                                ),
+                            ),
+                    ),
+            )
         val notesStateObserver: Observer<NotesState> = mockk(relaxed = true)
         systemUnderTest.notesState.observeForever(notesStateObserver)
 

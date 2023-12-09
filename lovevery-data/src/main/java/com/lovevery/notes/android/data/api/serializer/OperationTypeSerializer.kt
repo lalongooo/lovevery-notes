@@ -11,7 +11,7 @@ class OperationTypeSerializer : JsonSerializer<OperationType> {
     override fun serialize(
         operationType: OperationType,
         typeOfSrc: Type,
-        context: JsonSerializationContext
+        context: JsonSerializationContext,
     ): JsonElement {
         return JsonPrimitive(operationType.value)
     }

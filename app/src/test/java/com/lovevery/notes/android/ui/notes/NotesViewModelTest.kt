@@ -16,9 +16,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-
 class NotesViewModelTest {
-
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
@@ -33,10 +31,11 @@ class NotesViewModelTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        systemUnderTest = NotesViewModel(
-            notesRepository = mockNotesRepository,
-            sessionRepository = mockSessionRepository
-        )
+        systemUnderTest =
+            NotesViewModel(
+                notesRepository = mockNotesRepository,
+                sessionRepository = mockSessionRepository,
+            )
     }
 
     @Test
@@ -44,10 +43,11 @@ class NotesViewModelTest {
         // given
         val testSubject = "testSubject"
         val testNoteContent = "testContent"
-        val mockNoteModel: NoteModel = NoteModel(
-            testSubject,
-            testNoteContent
-        )
+        val mockNoteModel: NoteModel =
+            NoteModel(
+                testSubject,
+                testNoteContent,
+            )
         every { mockSessionRepository.getSubject() } returns testSubject
         every {
             mockNotesRepository.addNote(testSubject, testNoteContent)
