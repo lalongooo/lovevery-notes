@@ -30,7 +30,7 @@ class MainActivityViewModel @Inject constructor(
     fun saveSubject(subject: String) = sessionRepository.saveSubject(subject)
 
     fun getUsers(): List<String> {
-        val stateSuccess = _notesState.value as? NotesState.Success
+        val stateSuccess = notesState.value as? NotesState.Success
         return stateSuccess?.notes
             ?.notes
             ?.keys
@@ -39,7 +39,7 @@ class MainActivityViewModel @Inject constructor(
     }
 
     fun getSubjects(): List<String> {
-        val stateSuccess = _notesState.value as? NotesState.Success
+        val stateSuccess = notesState.value as? NotesState.Success
         return stateSuccess?.notes
             ?.notes
             ?.get(sessionRepository.getUserId())
