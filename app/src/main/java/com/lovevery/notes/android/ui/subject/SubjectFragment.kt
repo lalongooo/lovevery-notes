@@ -37,7 +37,7 @@ class SubjectFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.editTextSubject.setOnEditorActionListener { _, actionId: Int, _ ->
             if (isDoneButtonPressed(actionId)) {
-                mainViewModel.saveSubject(binding.editTextSubject.text.toString())
+                handleEnteredText()
                 findNavController().navigate(R.id.action_enterSubject_to_notes)
                 true
             } else {
@@ -51,6 +51,12 @@ class SubjectFragment : Fragment() {
                 binding.editTextSubject
             ).show(WindowInsetsCompat.Type.ime())
         }
+    }
+
+    private fun handleEnteredText() {
+        val enteredUserId = binding.editTextSubject.text.toString()
+        mainViewModel.saveSubject(enteredUserId)
+        binding.editTextSubject.editableText.clear()
     }
 
     companion object {

@@ -34,6 +34,13 @@ class SubjectsListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         retrieveSubjects()
+        setupClickListeners()
+    }
+
+    private fun setupClickListeners() {
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_subjectsList_to_enterSubject)
+        }
     }
 
     private fun retrieveSubjects() {

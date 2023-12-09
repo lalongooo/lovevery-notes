@@ -71,13 +71,15 @@ class MainActivityViewModelTest {
         verify { sessionRepository.saveSubject(testSubject) }
     }
 
-    private val notesLiveData = MutableLiveData<Notes>()
-
     @Test
     fun `test getUsers with non-empty results`() {
         // given
-        notesLiveData.value = Notes(mapOf("user123" to listOf(Note("test", "t"))))
-        every { systemUnderTest getProperty "notes" } returns notesLiveData
+        val testNotes = Notes(
+            mapOf("joe" to listOf(Note(subject = "cars", content = "Porsche 911")))
+        )
+        val notesLiveData = MutableLiveData<NotesState>()
+        notesLiveData.value = NotesState.Success(testNotes)
+        every { systemUnderTest getProperty "notesState" } returns notesLiveData
 
         // when
         val result = systemUnderTest.getUsers()
@@ -89,8 +91,9 @@ class MainActivityViewModelTest {
     @Test
     fun `test getUsers with empty results`() {
         // given
-        notesLiveData.value = Notes(emptyMap())
-        every { systemUnderTest getProperty "notes" } returns notesLiveData
+        val notesLiveData = MutableLiveData<NotesState>()
+        notesLiveData.value = NotesState.Empty
+        every { systemUnderTest getProperty "notesState" } returns notesLiveData
 
         // when
         val result = systemUnderTest.getUsers()
@@ -102,10 +105,13 @@ class MainActivityViewModelTest {
     @Test
     fun `test getSubjects with non-empty results`() {
         // given
-        val userId = "user123"
-        every { sessionRepository.getUserId() } returns userId
-        notesLiveData.value = Notes(mapOf(userId to listOf(Note("test", "t"))))
-        every { systemUnderTest getProperty "notes" } returns notesLiveData
+        val testNotes = Notes(
+            mapOf("joe" to listOf(Note(subject = "cars", content = "Porsche 911")))
+        )
+        val notesLiveData = MutableLiveData<NotesState>()
+        notesLiveData.value = NotesState.Success(testNotes)
+        every { sessionRepository.getUserId() } returns "joe"
+        every { systemUnderTest getProperty "notesState" } returns notesLiveData
 
         // when
         val result = systemUnderTest.getSubjects()
@@ -117,8 +123,9 @@ class MainActivityViewModelTest {
     @Test
     fun `test getSubjects with empty results`() {
         // given
-        notesLiveData.value = Notes(emptyMap())
-        every { systemUnderTest getProperty "notes" } returns notesLiveData
+        val notesLiveData = MutableLiveData<NotesState>()
+        notesLiveData.value = NotesState.Empty
+        every { systemUnderTest getProperty "notesState" } returns notesLiveData
 
         // when
         val result = systemUnderTest.getSubjects()
@@ -157,8 +164,9 @@ class MainActivityViewModelTest {
                 )
             )
         )
-        every { sessionRepository.getUserId() } returns userId
-        every { notesRepository.getUserNotes(userId) } returns Single.just(mockUserNotesModel)
+        every {
+            notesRepository.getUserNotesBySubject()
+        } returns Single.just(mockUserNotesModel)
 
         val userNotesStateObserver: Observer<UserNotesState> = mockk(relaxed = true)
         systemUnderTest.userNotes.observeForever(userNotesStateObserver)
@@ -167,8 +175,7 @@ class MainActivityViewModelTest {
         systemUnderTest.refreshUserNotes()
 
         // verify
-        verify { sessionRepository.getUserId() }
-        verify { notesRepository.getUserNotes(userId) }
+        verify { notesRepository.getUserNotesBySubject() }
         verify { userNotesStateObserver.onChanged(ofType(UserNotesState.Success::class)) }
     }
 
@@ -181,7 +188,7 @@ class MainActivityViewModelTest {
         systemUnderTest.userNotes.observeForever(userNotesStateObserver)
 
         every { sessionRepository.getUserId() } returns userId
-        every { notesRepository.getUserNotes(userId) } returns Single.error(error)
+        every { notesRepository.getUserNotesBySubject() } returns Single.error(error)
 
         // when
         systemUnderTest.refreshUserNotes()
@@ -189,7 +196,6 @@ class MainActivityViewModelTest {
         // verify
         verify { userNotesStateObserver.onChanged(UserNotesState.Error(error)) }
     }
-
 
 
     @Test
