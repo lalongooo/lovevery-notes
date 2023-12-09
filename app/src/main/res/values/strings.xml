@@ -14,5 +14,6 @@
     <string name="screen_title_enter_subject">Enter subject</string>
     <string name="screen_title_notes">Notes</string>
     <string name="notes_empty_or_server_error">Unable to retrieve notes</string>
+    <string name="error_occurred_while_sending_note">Cannot send notes now</string>
 
 </resources>

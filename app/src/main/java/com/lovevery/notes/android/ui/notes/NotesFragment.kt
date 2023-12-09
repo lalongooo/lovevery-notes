@@ -75,13 +75,7 @@ class NotesFragment : Fragment() {
 
     private fun handleUserNotesState(userNotesState: UserNotesState) {
         when (userNotesState) {
-            UserNotesState.Empty, is UserNotesState.Error -> {
-                Snackbar.make(
-                    binding.rootCoordinatorLayout,
-                    R.string.notes_empty_or_server_error,
-                    Snackbar.LENGTH_SHORT,
-                ).show()
-            }
+            UserNotesState.Empty, is UserNotesState.Error -> { }
 
             is UserNotesState.Success -> {
                 val notes = userNotesState.notes.notes.map { it.message }
@@ -97,7 +91,13 @@ class NotesFragment : Fragment() {
 
     private fun handlePostNoteState(postNoteState: PostNoteState) {
         when (postNoteState) {
-            is PostNoteState.Error -> TODO()
+            is PostNoteState.Error -> {
+                Snackbar.make(
+                    binding.rootCoordinatorLayout,
+                    R.string.error_occurred_while_sending_note,
+                    Snackbar.LENGTH_SHORT,
+                ).show()
+            }
             is PostNoteState.Success -> {
                 mainViewModel.refreshUserNotes()
             }
