@@ -2,7 +2,7 @@
     <string name="app_name">lovevery-notes</string>
     <string name="enter_your_username">Enter your username</string>
     <string name="username_hint">username</string>
-    <string name="enter_note">Enter the content of your note</string>
+    <string name="enter_note">Your note</string>
     <string name="enter_subject">Enter subject</string>
     <string name="subject_hint">subject</string>
     <string name="send">Send</string>
@@ -13,4 +13,6 @@
     <string name="screen_title_enter_username">Enter username</string>
     <string name="screen_title_enter_subject">Enter subject</string>
     <string name="screen_title_notes">Notes</string>
+    <string name="notes_empty_or_server_error">Unable to retrieve notes</string>
+
 </resources>

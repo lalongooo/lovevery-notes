@@ -20,10 +20,6 @@ class SplashScreenFragment : Fragment() {
     private var _binding: FragmentSplashScreenBinding? = null
     private val binding get() = _binding!!
 
-    private val splashViewModel: SplashViewModel by viewModels {
-        requireContext().getAppComponent().viewModelsFactory()
-    }
-
     private val mainViewModel: MainActivityViewModel by viewModels {
         requireContext().getAppComponent().viewModelsFactory()
     }
@@ -39,14 +35,14 @@ class SplashScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObserver()
-        splashViewModel.getNotes()
+        mainViewModel.getAllNotes()
     }
 
     private fun setupObserver() {
-        splashViewModel.progress
+        mainViewModel.progress
             .observe(viewLifecycleOwner, Observer(this::showLoading))
 
-        splashViewModel.notesState
+        mainViewModel.notesState
             .observe(viewLifecycleOwner, Observer(this::handleNotesState))
     }
 
@@ -66,7 +62,6 @@ class SplashScreenFragment : Fragment() {
                 // TODO
             }
             is NotesState.Success -> {
-                mainViewModel.setUserNotes(notesState.notes)
                 findNavController().navigate(R.id.action_splashScreen_to_usersList)
             }
         }

@@ -1,7 +1,9 @@
 package com.lovevery.notes.android.data.repository
 
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class SessionRepository @Inject constructor() {
 
     private lateinit var userId: String

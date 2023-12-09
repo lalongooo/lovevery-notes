@@ -22,13 +22,6 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SplashViewModel::class)
-    abstract fun bindSplashViewModel(
-        loginViewModel: SplashViewModel
-    ): ViewModel
-
-    @Binds
-    @IntoMap
     @ViewModelKey(NotesViewModel::class)
     abstract fun bindNotesViewModel(
         loginViewModel: NotesViewModel

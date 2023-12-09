@@ -11,9 +11,12 @@ import com.lovevery.notes.android.data.repository.model.NotesModel
 import com.lovevery.notes.android.data.repository.model.UserNotesModel
 import io.reactivex.Single
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class NotesRepository @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val sessionRepository: SessionRepository
 ) {
     fun addNote(
         subject: String,
@@ -22,7 +25,7 @@ class NotesRepository @Inject constructor(
         apiService
             .addNote(
                 NoteRequest(
-                    user = "joe", // TODO: Retrieve this value from a manager or a session storage
+                    user = sessionRepository.getUserId(),
                     subject = subject,
                     content = content
                 )
@@ -41,6 +44,18 @@ class NotesRepository @Inject constructor(
         return apiService
             .getNotesForUser(userId)
             .map { it.toUserNotesModel() }
+            .applySchedulers()
+    }
+
+    fun getUserNotesBySubject(): Single<UserNotesModel> {
+        return apiService
+            .getNotesForUser(sessionRepository.getUserId())
+            .map { it.toUserNotesModel() }
+            .map { userNotesModel ->
+                userNotesModel.notes
+                    .filter { it.subject == sessionRepository.getSubject() }
+                    .let { UserNotesModel(userNotesModel.user, it) }
+            }
             .applySchedulers()
     }
 }
