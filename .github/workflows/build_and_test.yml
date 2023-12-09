@@ -20,7 +20,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - uses: gradle/gradle-build-action@v2.1.0
+      - uses: gradle/gradle-build-action@v2.10.0
         with:
           arguments: assembleDebug --stacktrace
   unit_tests:
@@ -32,6 +32,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - uses: gradle/gradle-build-action@v2.1.0
+      - uses: gradle/gradle-build-action@v2.10.0
         with:
           arguments: testDebugUnitTest --stacktrace
