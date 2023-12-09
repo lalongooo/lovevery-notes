@@ -51,6 +51,10 @@
             android:id="@+id/action_subjectsList_to_notes"
             app:destination="@+id/fragment_notes" />
 
+        <action
+            android:id="@+id/action_subjectsList_to_enterSubject"
+            app:destination="@+id/fragment_enter_subject" />
+
     </fragment>
 
     <fragment
@@ -86,7 +90,9 @@
 
         <action
             android:id="@+id/action_enterSubject_to_notes"
-            app:destination="@+id/fragment_notes" />
+            app:destination="@+id/fragment_notes"
+            app:popUpTo="@+id/fragment_subjects_list"
+            app:popUpToInclusive="false"/>
 
     </fragment>
 
