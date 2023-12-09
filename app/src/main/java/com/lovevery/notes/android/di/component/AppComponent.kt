@@ -14,7 +14,7 @@ import javax.inject.Singleton
         AppModule::class,
         ViewModelModule::class,
         NetworkModule::class,
-    ]
+    ],
 )
 interface AppComponent {
     fun viewModelsFactory(): ViewModelProviderFactory

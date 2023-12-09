@@ -1,8 +1,18 @@
 name: "Build & Test"
 on: push
 jobs:
+  ktlint:
+    name: "🧐Run ktlint check"
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: curl -sSLO https://github.com/pinterest/ktlint/releases/download/1.0.1/ktlint && chmod a+x ktlint
+      - name: Run ktlint
+        run: |
+          ./ktlint -F "!**/generated/**"
   build_app:
-    name: "Build app"
+    name: "🏗️Build app"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -14,7 +24,7 @@ jobs:
         with:
           arguments: assembleDebug --stacktrace
   unit_tests:
-    name: "Run tests"
+    name: "🧑🏼‍🔬Run tests"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

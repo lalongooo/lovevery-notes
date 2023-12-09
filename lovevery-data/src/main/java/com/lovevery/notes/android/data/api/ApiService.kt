@@ -12,11 +12,15 @@ import retrofit2.http.Path
 
 interface ApiService {
     @POST("proto/messages")
-    fun addNote(@Body messageRequest: NoteRequest): Single<NoteResponse>
+    fun addNote(
+        @Body messageRequest: NoteRequest,
+    ): Single<NoteResponse>
 
     @GET("proto/messages")
     fun getNotes(): Single<NotesResponse>
 
     @GET("proto/messages/{userId}")
-    fun getNotesForUser(@Path("userId") userId: String): Single<UserNotesResponse>
+    fun getNotesForUser(
+        @Path("userId") userId: String,
+    ): Single<UserNotesResponse>
 }

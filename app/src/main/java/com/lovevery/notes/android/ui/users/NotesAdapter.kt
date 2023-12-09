@@ -11,19 +11,19 @@ import com.lovevery.notes.android.R
 
 class NotesAdapter(
     private val notes: MutableList<String>,
-    private val onItemClick: (String) -> Unit
+    private val onItemClick: (String) -> Unit,
 ) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): NoteViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(
-                R.layout.notes_recycler_view_item,
-                parent,
-                false
-            )
+        val view =
+            LayoutInflater.from(parent.context)
+                .inflate(
+                    R.layout.notes_recycler_view_item,
+                    parent,
+                    false,
+                )
         return NoteViewHolder(view) { position ->
             onItemClick(notes[position])
         }
@@ -31,7 +31,7 @@ class NotesAdapter(
 
     override fun onBindViewHolder(
         holder: NoteViewHolder,
-        position: Int
+        position: Int,
     ): Unit = holder.bind(notes[position])
 
     override fun getItemCount(): Int = notes.size
@@ -46,9 +46,8 @@ class NotesAdapter(
 
     class NoteViewHolder(
         view: View,
-        onItemClicked: (Int) -> Unit
+        onItemClicked: (Int) -> Unit,
     ) : RecyclerView.ViewHolder(view) {
-
         init {
             view.setOnClickListener {
                 onItemClicked(adapterPosition)

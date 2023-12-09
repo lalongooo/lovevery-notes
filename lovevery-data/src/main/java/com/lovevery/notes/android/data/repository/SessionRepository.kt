@@ -4,21 +4,21 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SessionRepository @Inject constructor() {
+class SessionRepository
+    @Inject
+    constructor() {
+        private lateinit var userId: String
+        private lateinit var subject: String
 
-    private lateinit var userId: String
-    private lateinit var subject: String
+        fun saveUserId(userId: String) {
+            this.userId = userId
+        }
 
-    fun saveUserId(userId: String) {
-        this.userId = userId
+        fun getUserId(): String = userId
+
+        fun saveSubject(subject: String) {
+            this.subject = subject
+        }
+
+        fun getSubject(): String = subject
     }
-
-    fun getUserId(): String =
-        userId
-
-    fun saveSubject(subject: String) {
-        this.subject = subject
-    }
-
-    fun getSubject(): String = subject
-}

@@ -1,7 +1,6 @@
 package com.lovevery.notes.android.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +12,8 @@ import com.lovevery.notes.android.MainActivityViewModel
 import com.lovevery.notes.android.R
 import com.lovevery.notes.android.databinding.FragmentSplashScreenBinding
 import com.lovevery.notes.android.extensions.getAppComponent
-import com.lovevery.notes.android.ui.users.UsersListFragment
 
 class SplashScreenFragment : Fragment() {
-
     private var _binding: FragmentSplashScreenBinding? = null
     private val binding get() = _binding!!
 
@@ -25,14 +22,18 @@ class SplashScreenFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSplashScreenBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         setupObserver()
         mainViewModel.getAllNotes()

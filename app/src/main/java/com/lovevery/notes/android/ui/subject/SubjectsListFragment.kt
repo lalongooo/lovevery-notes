@@ -15,7 +15,6 @@ import com.lovevery.notes.android.extensions.getAppComponent
 import com.lovevery.notes.android.ui.users.NotesAdapter
 
 class SubjectsListFragment : Fragment() {
-
     private var _binding: FragmentSubjectsListBinding? = null
     private val binding get() = _binding!!
 
@@ -24,14 +23,18 @@ class SubjectsListFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSubjectsListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         retrieveSubjects()
         setupClickListeners()
@@ -45,13 +48,13 @@ class SubjectsListFragment : Fragment() {
 
     private fun retrieveSubjects() {
         val subjects = mainViewModel.getSubjects()
-        val adapter = NotesAdapter(subjects.toMutableList()) { selectedSubject ->
-            Log.d(TAG, "Selected subject: $selectedSubject")
-            mainViewModel.saveSubject(selectedSubject)
-            findNavController().navigate(R.id.action_subjectsList_to_notes)
-        }
+        val adapter =
+            NotesAdapter(subjects.toMutableList()) { selectedSubject ->
+                Log.d(TAG, "Selected subject: $selectedSubject")
+                mainViewModel.saveSubject(selectedSubject)
+                findNavController().navigate(R.id.action_subjectsList_to_notes)
+            }
         binding.recyclerViewSubjects.adapter = adapter
-
     }
 
     companion object {
