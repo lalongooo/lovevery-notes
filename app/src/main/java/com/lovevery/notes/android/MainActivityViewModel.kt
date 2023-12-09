@@ -6,6 +6,7 @@ import com.lovevery.notes.android.base.BaseViewModel
 import com.lovevery.notes.android.data.repository.NotesRepository
 import com.lovevery.notes.android.data.repository.SessionRepository
 import com.lovevery.notes.android.extensions.asLiveData
+import com.lovevery.notes.android.mapper.toNotes
 import com.lovevery.notes.android.mapper.toUserNotes
 import com.lovevery.notes.android.model.Notes
 import com.lovevery.notes.android.ui.NotesState
@@ -18,27 +19,19 @@ class MainActivityViewModel @Inject constructor(
     private val sessionRepository: SessionRepository
 ) : BaseViewModel() {
 
-    private val _notesState = SingleLiveEvent<NotesState>()
-    val notesState = _notesState.asLiveData()
+    private val _userNotes = SingleLiveEvent<UserNotesState>()
+    val userNotes = _userNotes.asLiveData()
 
-    private val _notes = MutableLiveData<Notes>()
-    val notes: LiveData<Notes> get() = _notes
-
-    private val _userNotes = MutableLiveData<UserNotesState>()
-    val userNotes: LiveData<UserNotesState> get() = _userNotes
-
-    private lateinit var selectedSubject: String
-
-    fun setUserNotes(notes: Notes) {
-        _notes.value = notes
-    }
+    private val _notesState = MutableLiveData<NotesState>()
+    val notesState : LiveData<NotesState> get() = _notesState
 
     fun saveUserId(userId: String) = sessionRepository.saveUserId(userId)
 
     fun saveSubject(subject: String) = sessionRepository.saveSubject(subject)
 
     fun getUsers(): List<String> {
-        return notes.value
+        val stateSuccess = _notesState.value as? NotesState.Success
+        return stateSuccess?.notes
             ?.notes
             ?.keys
             ?.toList()
@@ -46,7 +39,8 @@ class MainActivityViewModel @Inject constructor(
     }
 
     fun getSubjects(): List<String> {
-        return notes.value
+        val stateSuccess = _notesState.value as? NotesState.Success
+        return stateSuccess?.notes
             ?.notes
             ?.get(sessionRepository.getUserId())
             ?.map { it.subject }
@@ -58,7 +52,7 @@ class MainActivityViewModel @Inject constructor(
 
     fun refreshUserNotes() {
         disposable.add(
-            notesRepository.getUserNotes(sessionRepository.getUserId())
+            notesRepository.getUserNotesBySubject()
                 .map { it.toUserNotes() }
                 .doOnSubscribe { progress.value = true }
                 .doFinally { progress.value = false }
@@ -72,6 +66,27 @@ class MainActivityViewModel @Inject constructor(
                     },
                     {
                         _userNotes.value = UserNotesState.Error(it)
+                    }
+                )
+        )
+    }
+
+    fun getAllNotes() {
+        disposable.add(
+            notesRepository.getNotes()
+                .map { it.toNotes() }
+                .doOnSubscribe { progress.value = true }
+                .doFinally { progress.value = false }
+                .subscribe(
+                    { notes ->
+                        if (notes.notes.isEmpty()) {
+                            _notesState.value = NotesState.Empty
+                        } else {
+                            _notesState.value = NotesState.Success(notes)
+                        }
+                    },
+                    {
+                        _notesState.value = NotesState.Error(it)
                     }
                 )
         )

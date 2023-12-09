@@ -1,5 +1,7 @@
 package com.lovevery.notes.android.ui.users
 
+import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lovevery.notes.android.R
 
 class NotesAdapter(
-    private val notes: List<String>,
+    private val notes: MutableList<String>,
     private val onItemClick: (String) -> Unit
 ) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
 
@@ -34,6 +36,14 @@ class NotesAdapter(
 
     override fun getItemCount(): Int = notes.size
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun clearData() {
+        Log.d(TAG, "Clearing data...")
+        notes.clear()
+        notifyDataSetChanged()
+        Log.d(TAG, "Data cleared")
+    }
+
     class NoteViewHolder(
         view: View,
         onItemClicked: (Int) -> Unit
@@ -51,5 +61,9 @@ class NotesAdapter(
         fun bind(note: String) {
             textViewUserName.text = note
         }
+    }
+
+    companion object {
+        private const val TAG = "NotesAdapter"
     }
 }

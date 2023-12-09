@@ -10,6 +10,7 @@ import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.lovevery.notes.android.MainActivityViewModel
 import com.lovevery.notes.android.R
 import com.lovevery.notes.android.databinding.FragmentNotesBinding
@@ -65,15 +66,23 @@ class NotesFragment : Fragment() {
 
         notesViewModel.postNoteState
             .observe(viewLifecycleOwner, Observer(this::handlePostNoteState))
+
+        mainViewModel.refreshUserNotes()
     }
 
     private fun handleUserNotesState(userNotesState: UserNotesState) {
         when (userNotesState) {
-            UserNotesState.Empty -> TODO()
-            is UserNotesState.Error -> TODO()
+            UserNotesState.Empty, is UserNotesState.Error -> {
+                Snackbar.make(
+                    binding.rootCoordinatorLayout,
+                    R.string.notes_empty_or_server_error,
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+
             is UserNotesState.Success -> {
                 val notes = userNotesState.notes.notes.map { it.message }
-                val adapter = NotesAdapter(notes) { userSelected ->
+                val adapter = NotesAdapter(notes.toMutableList()) { userSelected ->
                     Log.d(TAG, "Selected Message: $userSelected")
                 }
                 binding.recyclerViewUserNotes.adapter = adapter

@@ -38,7 +38,7 @@ class SubjectsListFragment : Fragment() {
 
     private fun retrieveSubjects() {
         val subjects = mainViewModel.getSubjects()
-        val adapter = NotesAdapter(subjects) { selectedSubject ->
+        val adapter = NotesAdapter(subjects.toMutableList()) { selectedSubject ->
             Log.d(TAG, "Selected subject: $selectedSubject")
             mainViewModel.saveSubject(selectedSubject)
             findNavController().navigate(R.id.action_subjectsList_to_notes)
